@@ -3,20 +3,17 @@ var querystring = require("querystring"),
     request = require('request'),
     VError = require('verror'),
     crypto = require("crypto");
- 
-var Bitcoincoid = function(key, secret) {
-  
+
+var Bitcoincoid = function(key, secret) {  
   this.key = key;
   this.secret = secret;
   this.tapi = 'https://vip.bitcoin.co.id/tapi';
   this.api = 'https://vip.bitcoin.co.id/api/';
   this.timeout = 5000;
   this._strictSSL = true;
-
 }
 
 Bitcoincoid.prototype._get = function(pair, method, callback) {
-
   this._request({
     url: this.api + pair + '/' + method
   }, callback);
@@ -62,7 +59,7 @@ Bitcoincoid.prototype._request = function (options, callback) {
   };
 
   for (var key in options) {
-    requestOptions[x] = options[x];
+    requestOptions[key] = options[key];
   }
   
   request(requestOptions, function(err, response, body) {
@@ -121,10 +118,6 @@ Bitcoincoid.prototype.getTrades = function(pair, callback) {
 
 Bitcoincoid.prototype.depth = function(pair, callback) {
   this._get(pair, 'depth', callback);
-}
-
-Bitcoincoid.prototype.getTicker = function(pair, callback) {
-  this._get(pair,'ticker', callback);
 }
 
 // 
